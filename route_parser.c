@@ -36,7 +36,7 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     while (count > 0)
     {
         RP_Route *r = malloc(sizeof(RP_Route));
-        r->path = malloc(sizeof(routes[count]));
+        r->path = malloc(sizeof(routes[count])); // TODO free
         strcpy(r->path, routes[count]);
         if (count == len)
         {
@@ -55,7 +55,7 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     {
         printf("Creating PR_Path with the following settings:\n"
                "\t- max_routes: %d\n"
-               "\t- matched: %b\n",
+               "\t- matched: %d\n",
                p->max_routes, p->matched);
     }
     return p;
@@ -76,15 +76,15 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
  *******************************************s****/
 void RP_Path_compare(RP_Path *p, int len, char routes[len][256])
 {
-for (int i = 0; i < len; i++)
-{
-if (strcmp(routes[i], p->path) == 0)
-{
-p->matched = true;
-p->result = malloc(sizeof(char) * 256);
-strcpy(p->result, routes[i]);
-}
-}
+    for (int i = 0; i < len; i++)
+    {
+        if (strcmp(routes[i], p->path) == 0)
+        {
+            p->matched = true;
+            p->result = malloc(sizeof(char) * 256);
+            strcpy(p->result, routes[i]);
+        }
+    }
 }
 
 /********************************************//**
@@ -133,7 +133,7 @@ void RP_PrintError(enum RP_Errors err)
 * Core
 ****************************************************/
 /***************************************************/
-static _RP_Node *_RP_Node_new(RP_Route *route)
+static _RP_Node *RP_Node_new(RP_Route *route)
 {
     _RP_Node *n = malloc(sizeof(_RP_Node));
     n->route = route;
