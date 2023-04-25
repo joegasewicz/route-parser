@@ -52,6 +52,7 @@ typedef struct RP_Path
     _RP_Node *_nodes;
 } RP_Path;
 
+
 RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[len][256]);
 
 void RP_Path_compare(RP_Path *p, int len, char routes[len][256]);

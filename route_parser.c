@@ -133,7 +133,7 @@ void RP_PrintError(enum RP_Errors err)
 * Core
 ****************************************************/
 /***************************************************/
-static _RP_Node *RP_Node_new(RP_Route *route)
+static _RP_Node *_RP_Node_new(RP_Route *route)
 {
     _RP_Node *n = malloc(sizeof(_RP_Node));
     n->route = route;

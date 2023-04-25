@@ -12,7 +12,7 @@ printf("Result: %s", path->result); // "/hello"
 ```
 
 ### Tests
-You will need [Google Test](https://google.github.io/googletest/) on your system to run the tests
+Tests are written in C++ with [Google Test](https://google.github.io/googletest/) 
 
 ### Bindings
 - Python (TODO)
