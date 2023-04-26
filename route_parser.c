@@ -29,7 +29,7 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     if (!max_routes)
         p->max_routes = RP_MAX_ROUTES;
     p->matched = false;
-    // _nodes
+    // create first node
     RP_Route *first_r = malloc(sizeof(RP_Route));
     first_r->path = malloc(sizeof(char) * strlen(routes[0]) + 1);
     strcpy(first_r->path, routes[0]);
@@ -39,7 +39,7 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     head->next = NULL;
     int i = 1;
     bool ins;
-    // The first node is assigned to p at the end of the loop
+    // create rest of nodes
     while (count > 0)
     {
         RP_Route *r = malloc(sizeof(RP_Route));
