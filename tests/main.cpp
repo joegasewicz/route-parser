@@ -16,10 +16,11 @@ TEST(route_parser, RP_Path_new)
     RP_Path *p = rp::RP_Path_new("/index", 256, 3, routes);
     ASSERT_EQ(p->length, 7);
     ASSERT_EQ(p->matched, false);
+    ASSERT_STREQ(p->result, NULL);
+    ASSERT_STREQ(p->fragment, NULL);
     ASSERT_STREQ(p->_nodes->route->path, "/in");
     ASSERT_STREQ(p->_nodes->next->route->path, "/index");
     ASSERT_STREQ(p->_nodes->next->next->route->path, "/inde");
-    // TODO finish rest of test for p
 }
 
 int main(int argc, char* argv[])

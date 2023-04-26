@@ -29,6 +29,8 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     if (!max_routes)
         p->max_routes = RP_MAX_ROUTES;
     p->matched = false;
+    p->result = NULL;
+    p->fragment = NULL;
     // create first node
     RP_Route *first_r = malloc(sizeof(RP_Route));
     first_r->path = malloc(sizeof(char) * strlen(routes[0]) + 1);
