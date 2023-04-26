@@ -57,12 +57,12 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
 
 void RP_Path_compare(RP_Path *p, int len, char routes[len][256]);
 
-void *RP_Path_clean(RP_Path *p);
+void RP_Path_clean(RP_Path *p);
 
 void RP_PrintError(enum RP_Errors err);
 
 // static
 static _RP_Node *_RP_Node_new(RP_Route *route);
-static bool _RP_Node_insert(_RP_Node *const node, RP_Route *route);
+static bool _RP_Node_insert(_RP_Node *const head, RP_Route *route);
 
 #endif //ROUTE_PARSER_ROUTE_PARSER_H

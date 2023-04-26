@@ -23,7 +23,7 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     int count = len;
     RP_Path *p = malloc(sizeof(RP_Path));
     int length = strlen(path_str) + 1;
-    p->path = malloc(length);
+    p->path = malloc(sizeof(char) * length);
     strcpy(p->path, path_str);
     p->length = length;
     if (!max_routes)
@@ -31,26 +31,31 @@ RP_Path *RP_Path_new(const char *path_str, int max_routes, int len, char routes[
     p->matched = false;
     // _nodes
     RP_Route *first_r = malloc(sizeof(RP_Route));
-    _RP_Node *route_n = _RP_Node_new(first_r);
-    bool ins = _RP_Node_insert(route_n, first_r);
+    first_r->path = malloc(sizeof(char) * strlen(routes[0]) + 1);
+    strcpy(first_r->path, routes[0]);
+    _RP_Node *head = _RP_Node_new(first_r);
+    head->route = malloc(sizeof(RP_Route));
+    head->route = first_r;
+    head->next = NULL;
+    int i = 1;
+    bool ins;
+    // The first node is assigned to p at the end of the loop
     while (count > 0)
     {
         RP_Route *r = malloc(sizeof(RP_Route));
-        r->path = malloc(sizeof(routes[count])); // TODO free
-        strcpy(r->path, routes[count]);
-        if (count == len)
+        r->path = malloc(sizeof(char) * strlen(routes[i]) + 1); // TODO free
+        strcpy(r->path, routes[i]);
+        ins = _RP_Node_insert(head, r);
+        if (!ins)
         {
-            ins = _RP_Node_insert(route_n, r);
+            printf("Error allocating memory\n");
+            break;
         }
-        else
-        {
-            _RP_Node *n = _RP_Node_new(r);
-            ins = _RP_Node_insert(n, r);
-        }
-        if (!ins) break;
         count--;
+        i++;
     }
-    p->_nodes = route_n;
+    // assign the first node to p
+    p->_nodes = head;
     if (RP_DEBUG)
     {
         printf("Creating PR_Path with the following settings:\n"
@@ -91,10 +96,10 @@ void RP_Path_compare(RP_Path *p, int len, char routes[len][256])
  * @brief
  *
  * @param p RP_PATH*
- * @return void*
+ * @return void
  *
  ***********************************************/
-void *RP_Path_clean(RP_Path *p)
+void RP_Path_clean(RP_Path *p)
 {
     _RP_Node * tmpPtr;
     free(p->result);
@@ -141,9 +146,9 @@ static _RP_Node *_RP_Node_new(RP_Route *route)
     return n;
 }
 
-static bool _RP_Node_insert(_RP_Node *const node, RP_Route *route)
+static bool _RP_Node_insert(_RP_Node *const head, RP_Route *route)
 {
-    _RP_Node *temp_node = node;
+    _RP_Node *temp_node = head;
     while(temp_node->next != NULL)
     {
         temp_node = temp_node->next;

@@ -11,21 +11,13 @@ namespace rp {
 
 TEST(route_parser, RP_Path_new)
 {
-    char routes[3][256] = {"/in", "/index", "/"};
+    char routes[3][256] = {"/in", "/index", "/inde"};
     RP_Path *p = rp::RP_Path_new("/index", 256, 3, routes);
     ASSERT_EQ(p->length, 7);
     ASSERT_EQ(p->matched, false);
-    RP_Route *r = (RP_Route*)malloc(sizeof(RP_Route));
-    _RP_Node *tempNodePtr = (_RP_Node*)malloc(sizeof(_RP_Node));
-    int count = 1;
-    ASSERT_EQ(p->_nodes->route->path, routes[0]);
-    while (tempNodePtr->next != NULL)
-    {
-        tempNodePtr = p->_nodes->next;
-        ASSERT_EQ(tempNodePtr->route->path, routes[count]);
-        count++;
-    }
-
+    ASSERT_STREQ(p->_nodes->route->path, "/in");
+    ASSERT_STREQ(p->_nodes->next->route->path, "/index");
+    ASSERT_STREQ(p->_nodes->next->next->route->path, "/inde");
 }
 
 int main(int argc, char* argv[]) {
