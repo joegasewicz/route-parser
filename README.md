@@ -19,3 +19,5 @@ Tests are written in C++ with [Google Test](https://google.github.io/googletest/
 
 ### Bindings
 - Python (TODO)
+- Go (TODO)
+- Javascript (TODO)

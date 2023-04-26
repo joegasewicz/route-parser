@@ -19,6 +19,7 @@ TEST(route_parser, RP_Path_new)
     ASSERT_STREQ(p->_nodes->route->path, "/in");
     ASSERT_STREQ(p->_nodes->next->route->path, "/index");
     ASSERT_STREQ(p->_nodes->next->next->route->path, "/inde");
+    // TODO finish rest of test for p
 }
 
 int main(int argc, char* argv[])
